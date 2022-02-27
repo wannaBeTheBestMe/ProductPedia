@@ -1,17 +1,17 @@
 # Frontend
 
-# dependencies
+# Dependencies
 /frontend/node_modules
 /frontend/.pnp
 /frontend.pnp.js
 
-# testing
+# Testing
 /frontend/coverage
 
-# production
+# Production
 /frontend/build
 
-# misc
+# Misc
 /frontend/.DS_Store
 /frontend/.env.local
 /frontend/.env.development.local
@@ -25,7 +25,7 @@
 # Backend
 
 # Byte-compiled / optimized / DLL files
-/backend/__pycache__
+/backend/app/__pycache__
 /backend/*.py[cod]
 /backend/*$py.class
 

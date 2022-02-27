@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from starlette.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 from requests_html import AsyncHTMLSession
@@ -24,6 +25,7 @@ app.add_middleware(
 async def read_root() -> dict:
     return {"message": "Welcome to this list"}
 
+
 def filter_non_digits(string: str) -> str:
     result = ''
     for char in string:
@@ -31,25 +33,34 @@ def filter_non_digits(string: str) -> str:
             result += char
     return result
 
-@app.get("/price/{url:path}", tags=["product"])
-async def get_price(url: str) -> dict:
-    beginning = time.time()
 
-    session = AsyncHTMLSession()
-    request = await session.get(url)
-    await request.html.arender()
+@app.get("/price", tags=["product"])
+async def get_price(request: Request) -> list:
+    params = request.query_params
+    urls = list(params.values())
 
-    product = {}
-    product["title"] = request.html.xpath(
-        '//*[@id="productTitle"]', first=True).text
-    try:
-        product["price"] = filter_non_digits(request.html.xpath(
-            '//*[@id="corePrice_desktop"]/div/table/tbody/tr[2]/td[2]/span[1]/span[2]', first=True).text)
-    except:
-        product["price"] = filter_non_digits(request.html.xpath(
-            '//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]', first=True).text)
+    products = []
+    for url in urls:
+        beginning = time.time()
 
-    end = time.time()
-    product["time"] = str(end - beginning)
+        session = AsyncHTMLSession()
+        request = await session.get(url)
+        await request.html.arender()
 
-    return {"data": product}
+        product = {}
+        product["title"] = request.html.xpath(
+            '//*[@id="productTitle"]', first=True).text
+        product["url"] = url
+        try:
+            product["price"] = filter_non_digits(request.html.xpath(
+                '//*[@id="corePrice_desktop"]/div/table/tbody/tr[2]/td[2]/span[1]/span[2]', first=True).text)
+        except:
+            product["price"] = filter_non_digits(request.html.xpath(
+                '//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]', first=True).text)
+
+        end = time.time()
+        product["time"] = str(end - beginning)
+
+        products.append(product)
+
+    return {"data": products}

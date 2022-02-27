@@ -53,6 +53,9 @@ async def get_product_info(request: Request) -> list:
         product["title"] = request.html.xpath(
             '//*[@id="productTitle"]', first=True).text
         product["url"] = url
+        global_rating_selector = "a[role='button'].a-popover-trigger > i.a-icon.a-icon-star > span.a-icon-alt"
+        global_rating_split_by_word = request.html.find(global_rating_selector, first=True).text.split(" ")
+        product["globalRating"] = f"{global_rating_split_by_word[0]}/{global_rating_split_by_word[3]}"
         thumbnail_images_selector = "ul.regularAltImageViewLayout > li.item img"
         product["thumbnailImages"] = [thumbnail.attrs["src"]
                                       for thumbnail in request.html.find(thumbnail_images_selector)]
@@ -66,6 +69,8 @@ async def get_product_info(request: Request) -> list:
         except:
             product["price"] = filter_non_digits(request.html.xpath(
                 '//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]', first=True).text)
+        about_this_item_selector = "ul.a-unordered-list.a-vertical.a-spacing-mini > li > span"
+        product["aboutThisItem"] = [bullet_point.text for bullet_point in request.html.find(about_this_item_selector)]
 
         end = time.time()
         product["time"] = str(end - beginning)

@@ -50,30 +50,56 @@ async def get_product_info(request: Request) -> list:
         await request.html.arender()
 
         product = {}
+
         product["title"] = request.html.xpath(
             '//*[@id="productTitle"]', first=True).text
+
         product["url"] = url
+
         global_rating_selector = "a[role='button'].a-popover-trigger > i.a-icon.a-icon-star > span.a-icon-alt"
         global_rating_split_by_word = request.html.find(
             global_rating_selector, first=True).text.split(" ")
         product["globalRating"] = f"{global_rating_split_by_word[0]}/{global_rating_split_by_word[3]}"
+
         thumbnail_images_selector = "ul.regularAltImageViewLayout > li.item img"
         product["thumbnailImages"] = [thumbnail.attrs["src"]
                                       for thumbnail in request.html.find(thumbnail_images_selector)]
+
         # large_images_selector = "img.a-dynamic-image.a-stretch-horizontal, img.a-dynamic-image.a-stretch-vertical"
         # TODO: Selector only selects 1 large image, should select more
         large_images_selector = ".a-stretch-horizontal, .a-stretch-vertical"
         product["largeImages"] = [image.attrs["src"]
                                   for image in request.html.find(large_images_selector)]
+
         try:
             product["price"] = filter_non_digits(request.html.xpath(
                 '//*[@id="corePrice_desktop"]/div/table/tbody/tr[2]/td[2]/span[1]/span[2]', first=True).text)
         except:
             product["price"] = filter_non_digits(request.html.xpath(
                 '//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]', first=True).text)
+
         about_this_item_selector = "ul.a-unordered-list.a-vertical.a-spacing-mini > li > span"
         product["aboutThisItem"] = [
             bullet_point.text for bullet_point in request.html.find(about_this_item_selector)]
+
+        technical_details_selector = ".a-row > div table[role='presentation'].prodDetTable > tbody > tr"
+        technical_details_keys = [technical_detail_key.text.replace(
+            " ", "") for technical_detail_key in request.html.find(technical_details_selector + " > th")]
+        technical_details_values = [technical_detail_value.text for technical_detail_value in request.html.find(
+            technical_details_selector + " > td")]
+        technical_details = {k: v for (k, v) in zip(
+            technical_details_keys, technical_details_values) if not k == "CustomerReviews"}
+        if bool(technical_details) == False:
+            alt_technical_details_selector = ".a-row > div.a-span6 table.a-bordered > tbody > tr > td > p"
+            alt_technical_details = [alt_technical_detail.text for alt_technical_detail in request.html.find(
+                alt_technical_details_selector)]
+            alt_technical_details_keys = [alt_technical_detail_key.replace(
+                " ", "") for alt_technical_detail_key in alt_technical_details if alt_technical_details.index(alt_technical_detail_key) % 2 == 0]
+            alt_technical_details_values = [alt_technical_detail_value for alt_technical_detail_value in alt_technical_details if not alt_technical_details.index(
+                alt_technical_detail_value) % 2 == 0]
+            technical_details = {alt_k: alt_v for (alt_k, alt_v) in zip(
+                alt_technical_details_keys, alt_technical_details_values) if not alt_k == "CustomerReviews"}
+        product["technicalDetails"] = technical_details
 
         end = time.perf_counter()
         product["time"] = str(end - beginning)

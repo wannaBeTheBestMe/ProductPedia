@@ -19,9 +19,17 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+
 @app.get("/", tags=["root"])
 async def read_root() -> dict:
     return {"message": "Welcome to this list"}
+
+def filter_non_digits(string: str) -> str:
+    result = ''
+    for char in string:
+        if char in '1234567890':
+            result += char
+    return result
 
 @app.get("/price/{url:path}", tags=["product"])
 async def get_price(url: str) -> dict:
@@ -32,11 +40,14 @@ async def get_price(url: str) -> dict:
     await request.html.arender()
 
     product = {}
-    product["title"] = request.html.xpath('//*[@id="productTitle"]', first=True).text
+    product["title"] = request.html.xpath(
+        '//*[@id="productTitle"]', first=True).text
     try:
-        product["price"] = request.html.xpath('//*[@id="corePrice_desktop"]/div/table/tbody/tr[2]/td[2]/span[1]/span[2]', first=True).text
+        product["price"] = filter_non_digits(request.html.xpath(
+            '//*[@id="corePrice_desktop"]/div/table/tbody/tr[2]/td[2]/span[1]/span[2]', first=True).text)
     except:
-        product["price"] = request.html.xpath('//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]', first=True).text
+        product["price"] = filter_non_digits(request.html.xpath(
+            '//*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]', first=True).text)
 
     end = time.time()
     product["time"] = str(end - beginning)

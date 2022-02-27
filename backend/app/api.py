@@ -34,8 +34,8 @@ def filter_non_digits(string: str) -> str:
     return result
 
 
-@app.get("/price", tags=["product"])
-async def get_price(request: Request) -> list:
+@app.get("/info", tags=["product"])
+async def get_product_info(request: Request) -> list:
     params = request.query_params
     urls = list(params.values())
 

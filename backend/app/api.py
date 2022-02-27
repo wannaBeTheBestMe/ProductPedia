@@ -29,8 +29,10 @@ async def read_root() -> dict:
 def filter_non_digits(string: str) -> str:
     result = ''
     for char in string:
-        if char in '1234567890':
+        if char in '1234567890.':
             result += char
+    if result[-1] == ".":
+        return result[:-1]
     return result
 
 
@@ -51,6 +53,13 @@ async def get_product_info(request: Request) -> list:
         product["title"] = request.html.xpath(
             '//*[@id="productTitle"]', first=True).text
         product["url"] = url
+        thumbnail_images_selector = "ul.regularAltImageViewLayout > li.item img"
+        product["thumbnailImages"] = [thumbnail.attrs["src"]
+                                      for thumbnail in request.html.find(thumbnail_images_selector)]
+        # large_images_selector = "img.a-dynamic-image.a-stretch-horizontal, img.a-dynamic-image.a-stretch-vertical"
+        large_images_selector = ".a-stretch-horizontal, .a-stretch-vertical" # TODO: Selector only selects 1 large image, should select more
+        product["largeImages"] = [image.attrs["src"]
+                                  for image in request.html.find(large_images_selector)]
         try:
             product["price"] = filter_non_digits(request.html.xpath(
                 '//*[@id="corePrice_desktop"]/div/table/tbody/tr[2]/td[2]/span[1]/span[2]', first=True).text)

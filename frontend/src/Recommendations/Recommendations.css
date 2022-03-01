@@ -1,0 +1,9 @@
+.section-recommendations {
+  background-color: var(--blue);
+  border-radius: var(--radius);
+  grid-row: span 2;
+}
+
+.heading-recommendations {
+  text-align: center;
+}

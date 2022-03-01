@@ -36,6 +36,10 @@
   color: var(--dark-gray);
 }
 
+.nav-items-parent > li > a:hover {
+  text-decoration: underline;
+}
+
 .comparison-tool-button {
   margin-left: auto; /* Right align button in nav bar */
   margin-right: var(--spacing);

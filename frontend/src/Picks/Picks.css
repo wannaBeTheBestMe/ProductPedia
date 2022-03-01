@@ -3,7 +3,7 @@
   /* margin-right: var(--spacing); */
   background-color: var(--blue);
   border-radius: var(--radius);
-  padding-bottom: var(--spacing);
+  /* padding-bottom: var(--spacing); */
   /* margin-bottom: calc(0.5 * var(--spacing)); */
 }
 
@@ -13,4 +13,31 @@
 
 .url-input {
   font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: calc(0.5 * var(--spacing));
+}
+
+.picks-buttons {
+  color: var(--light-gray);
+  background-color: rgba(66, 70, 81, 0.7);
+  /* background-color: var(--pink); */
+  font-family: inherit;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+
+.add-remove-buttons {
+  display: inline-block;
+  /* float: right; */
+  margin-left: calc(var(--spacing));
+}
+
+.recommend-add-button {
+  margin-left: calc(1.5 * var(--spacing));
+  margin-bottom: calc(var(--spacing));
+}
+
+.picks-buttons:first-child {
+  margin-right: calc(0.5 * var(--spacing));
 }

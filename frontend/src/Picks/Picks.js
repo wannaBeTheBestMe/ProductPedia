@@ -11,12 +11,12 @@ const Picks = () => {
         Thought of some products you might want to buy? Paste their URLs below!
       </p>
 
-      <label htmlFor="test"></label>
+      <label htmlFor="url"></label>
       <input
         type="text"
-        id="test"
-        className="url-input"
-        name="test"
+        id="url"
+        className="placeholder-indent url-input"
+        name="url"
         placeholder="https://..."
       />
     </section>

@@ -14,6 +14,7 @@
 
 body {
   margin: 0;
+  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Open Sans", sans-serif;
@@ -48,17 +49,32 @@ p {
   font-size: 0.8em;
 }
 
-input[type="text"] {
+h2 + p {
+  margin-top: 0;
+  margin-botom: 1em;
+  font-weight: 600;
+  text-align: center;
+}
+
+input[type="text"],
+select {
   border-radius: var(--radius);
-  min-width: 300px;
-  min-height: 40px;
+  width: 300px;
+  height: 40px;
   border: none;
   background-color: var(--light-gray);
   color: rgba(66, 70, 81, 0.5);
   line-height: normal;
   font-size: 1.3em;
-  text-indent: 0.7em;
   margin-left: var(--spacing);
+}
+
+.placeholder-indent {
+  text-indent: 0.7em;
+}
+
+select {
+  border-right: 16px solid transparent
 }
 
 ::placeholder {

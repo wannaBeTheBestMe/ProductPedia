@@ -1,0 +1,8 @@
+.grid-container {
+  display: grid;
+  grid-auto-flow: row;
+  gap: calc(0.5 * var(--spacing));
+  grid-template-columns: 1fr 1fr;
+  margin-left: var(--spacing);
+  margin-right: var(--spacing);
+}

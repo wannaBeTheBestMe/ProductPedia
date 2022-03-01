@@ -1,0 +1,31 @@
+.section-filters {
+  background: var(--blue);
+  border-radius: var(--radius);
+  /* margin-left: var(--spacing); */
+  /* margin-right: var(--spacing); */
+}
+
+.filters-heading {
+  text-align: center;
+}
+
+.form-control {
+  padding-bottom: var(--spacing);
+}
+
+.price-input {
+  max-width: 130px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.price-input::placeholder {
+  text-align: center;
+}
+
+.price-input:-ms-input-placeholder {
+  text-align: center;
+}
+
+.price-input::-ms-input-placeholder {
+  text-align: center;
+}

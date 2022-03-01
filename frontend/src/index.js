@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Nav from './Nav/Nav.js';
-import Picks from './Picks/Picks.js';
+import Body from './Body/Body.js';
 
 ReactDOM.render(
   <React.StrictMode>
     <Nav />
-    <Picks />
+    <Body />
   </React.StrictMode>,
   document.getElementById('root')
 );

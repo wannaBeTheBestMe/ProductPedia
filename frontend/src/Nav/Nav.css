@@ -47,4 +47,5 @@
   border-radius: var(--radius);
   font-size: 1.1em;
   padding: 0.5em 1em;
+  cursor: pointer;
 }

@@ -1,0 +1,23 @@
+.section-your-picks {
+  margin-left: var(--spacing);
+  margin-right: var(--spacing);
+  background-color: var(--blue);
+  border-radius: var(--radius);
+  padding-bottom: var(--spacing);
+  margin-bottom: calc(0.5 * var(--spacing));
+}
+
+.your-picks-heading {
+  text-align: center;
+}
+
+h2 + p {
+  margin-top: 0;
+  margin-botom: 1em;
+  font-weight: 600;
+  text-align: center;
+}
+
+.url-input {
+  font-family: 'IBM Plex Mono', monospace;
+}

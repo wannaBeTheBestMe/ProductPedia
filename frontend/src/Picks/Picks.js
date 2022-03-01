@@ -10,7 +10,7 @@ import {
 } from "formik";
 import * as Yup from "yup";
 
-const MyTextInput = ({ label, ...props }) => {
+const UrlInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <>
@@ -32,68 +32,59 @@ const validationSchema = Yup.object({
 });
 
 const onSubmit = (values) => {
-  setTimeout(() => {
-    alert(JSON.stringify(values, null, 2));
-  }, 500);
+  console.log(values);
 };
 
 const AddProductUrls = () => (
   <div>
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ values }) => (
+      {({ values, isSubmitting }) => (
         <Form>
-          <FieldArray
-            name="urls"
-            render={(arrayHelpers) => (
-              <div>
-                {values.urls && values.urls.length > 0 ? (
-                  values.urls.map((friend, index) => (
+          <FieldArray name="urls">
+            {(fieldArrayProps) => {
+              console.log(fieldArrayProps);
+              const { push, remove, form } = fieldArrayProps;
+              const { values } = form;
+              const { urls } = values;
+
+              return (
+                <div>
+                  {urls.map((url, index) => (
                     <div key={index}>
-                      <MyTextInput
+                      <UrlInput
                         label=""
-                        name="url"
+                        name={`urls[${index}]`}
                         type="text"
                         placeholder="https://..."
                       />
+
                       <div className="add-remove-buttons">
                         <button
                           type="button"
-                          onClick={() => arrayHelpers.insert(index, "")} // Insert an empty string at a position
                           className="picks-buttons"
+                          onClick={() => push(index)}
                         >
                           +
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => arrayHelpers.remove(index)} // Remove a URL from the list
-                          className="picks-buttons"
-                        >
-                          -
-                        </button>
+                        {index > 0 && (
+                          <button
+                            type="button"
+                            className="picks-buttons"
+                            onClick={() => remove("")}
+                          >
+                            -
+                          </button>
+                        )}
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => arrayHelpers.push("")}
-                    className="recommend-add-button picks-buttons"
-                  >
-                    {/* Message when user has removed all URLs from the list */}
-                    Add a URL
-                  </button>
-                )}
-                <div>
-                  <button
-                    type="submit"
-                    className="recommend-add-button picks-buttons"
-                  >
-                    Recommend!
-                  </button>
+                  ))}
                 </div>
-              </div>
-            )}
-          />
+              );
+            }}
+          </FieldArray>
+          <button type="submit" className="recommend-add-button picks-buttons">
+            Recommend!
+          </button>
         </Form>
       )}
     </Formik>
@@ -107,17 +98,7 @@ const Picks = () => {
       <p>
         Thought of some products you might want to buy? Paste their URLs below!
       </p>
-
       <AddProductUrls />
-
-      {/* <label htmlFor="url"></label> */}
-      {/* <input */}
-      {/*   type="text" */}
-      {/*   id="url" */}
-      {/*   className="placeholder-indent url-input" */}
-      {/*   name="url" */}
-      {/*   placeholder="https://..." */}
-      {/* /> */}
     </section>
   );
 };

@@ -32,8 +32,13 @@ const validationSchema = Yup.object({
   urls: Yup.array().of(Yup.string().url()),
 });
 
-const onSubmit = (values) => {
+async function onSubmit(values) {
   console.log(values);
+  const response = await fetch(
+    `http://localhost:8000/info?1=${encodeURIComponent(values["urls"][0])}`
+  );
+  const info = await response.json();
+  console.log(info.data);
 };
 
 const AddProductUrls = () => (
@@ -43,7 +48,6 @@ const AddProductUrls = () => (
         <Form>
           <FieldArray name="urls">
             {(fieldArrayProps) => {
-              console.log(fieldArrayProps);
               const { push, remove, form } = fieldArrayProps;
               const { values } = form;
               const { urls } = values;

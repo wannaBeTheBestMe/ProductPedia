@@ -59,7 +59,7 @@ h2 + p {
 input[type="text"],
 select {
   border-radius: var(--radius);
-  width: 300px;
+  width: 400px;
   height: 40px;
   border: none;
   background-color: var(--light-gray);

@@ -28,7 +28,8 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-  urls: Yup.string().url(),
+  // urls: Yup.string().url(),
+  urls: Yup.array().of(Yup.string().url()),
 });
 
 const onSubmit = (values) => {
@@ -51,12 +52,14 @@ const AddProductUrls = () => (
                 <div>
                   {urls.map((url, index) => (
                     <div key={index}>
-                      <UrlInput
-                        label=""
+                      <label htmlFor={`urls[${index}]`}></label>
+                      <Field
                         name={`urls[${index}]`}
                         type="text"
                         placeholder="https://..."
+                        className="placeholder-indent url-input"
                       />
+                      <ErrorMessage name={`urls[${index}]`} />
 
                       <div className="add-remove-buttons">
                         <button

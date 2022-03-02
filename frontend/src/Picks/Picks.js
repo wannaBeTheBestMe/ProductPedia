@@ -33,13 +33,23 @@ const validationSchema = Yup.object({
 });
 
 async function onSubmit(values) {
-  console.log(values);
-  const response = await fetch(
-    `http://localhost:8000/info?1=${encodeURIComponent(values["urls"][0])}`
-  );
+  let urls = values.urls;
+  const encodedUrls = urls.map((url) => encodeURIComponent(url));
+  console.log("Encoded URL(s)", encodedUrls);
+
+  const encodedUrlWrapper = (encodedUrl) =>
+    `${encodedUrls.indexOf(encodedUrl) + 1}=${encodedUrl}&`;
+
+  let responseString = "";
+  for (let i = 0; i < encodedUrls.length; i++) {
+    responseString += encodedUrlWrapper(encodedUrls[i]);
+  }
+
+  const prefix = "http://localhost:8000/info?";
+  const response = await fetch(prefix + responseString);
   const info = await response.json();
   console.log(info.data);
-};
+}
 
 const AddProductUrls = () => (
   <div>

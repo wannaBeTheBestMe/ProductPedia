@@ -23,8 +23,9 @@ Run the following to start the back-end server:
 
 ```bash
 cd backend
-./venv/Scripts/activate # Activate the virtual environment on Windows
-source venv/bin/activate # Activate the virtual environment on *nix
+python -m venv venv # Create a virtual environment
+./venv/Scripts/activate # Activate the virtual environment (Windows)
+source venv/bin/activate # Activate the virtual environment (*nix)
 pip install -r requirements.txt
 python main.py
 ```

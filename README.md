@@ -6,7 +6,7 @@ This project was initiated (with myself as its sole developer) with the intentio
 
 The front-end uses React (refer to the ```package.json``` file for information about the front-end dependencies).
 The front-end uses ```create-react-app```.
-The back-end uses the the framework FastAPI (refer to the ```requirements.txt``` for information about the back-end dependencies). (WIP)
+The back-end uses the the framework FastAPI (refer to ```requirements.txt``` for information about the back-end dependencies). (WIP)
 The machine learning library currently being used is fastText. (WIP)
 
 ## Run

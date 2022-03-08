@@ -35,7 +35,6 @@ const validationSchema = Yup.object({
 async function onSubmit(values) {
   let urls = values.urls;
   const encodedUrls = urls.map((url) => encodeURIComponent(url));
-  console.log("Encoded URL(s)", encodedUrls);
 
   const encodedUrlWrapper = (encodedUrl) =>
     `${encodedUrls.indexOf(encodedUrl) + 1}=${encodedUrl}&`;

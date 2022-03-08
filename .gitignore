@@ -32,3 +32,8 @@
 # Environments
 
 /backend/venv
+
+/retail/.ipynb_checkpoints/
+/retail/retail.bin
+/retail/retail.train
+/retail/train.processed.csv

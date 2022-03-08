@@ -15,6 +15,7 @@ Both the front-end and back-end servers must be run in order for the application
 
 ```bash
 cd frontend
+npm install
 npm start
 ```
 
@@ -24,6 +25,7 @@ Run the following to start the back-end server:
 cd backend
 ./venv/Scripts/activate # Activate the virtual environment on Windows
 source venv/bin/activate # Activate the virtual environment on *nix
+pip install -r requirements.txt
 python main.py
 ```
 

@@ -109,16 +109,16 @@ async def get_product_info(request: Request) -> list:
     return {"data": products}
 
 
-@app.get("/departments", tags=["product"])
-async def get_department_info():
-    session = AsyncHTMLSession()
-    request = await session.get("https://www.amazon.in/Amazon-Brand-Vedaka-Flour-Besan/dp/B07F1TL383?pd_rd_w=z3ZTD&pf_rd_p=e214524e-b3bf-4a7d-a6e7-1c972f7f3d37&pf_rd_r=TX39TYJSK4D1YPMRS9E5&pd_rd_r=facfa86f-0b56-4a73-bfc1-ea70901545f7&pd_rd_wg=262VD&pd_rd_i=B07F1TL383&fpw=alm&almBrandId=ctnow&ref_=pd_alm_fs_dsk_sf_rtd_1_1_i")
-    await request.html.arender()
-
-    departments = {}
-
-    # departments_menu_selector = "#hmenu-content > ul > li > a"
-    # departments["all"] = request.html.find(departments_menu_selector).text
-    departments["all"] = request.html.xpath('//*[@id="productTitle"]', first=True).text
-
-    return {"data": departments}
+# @app.get("/departments", tags=["product"])
+# async def get_department_info():
+#     session = AsyncHTMLSession()
+#     request = await session.get("https://www.amazon.in/Amazon-Brand-Vedaka-Flour-Besan/dp/B07F1TL383?pd_rd_w=z3ZTD&pf_rd_p=e214524e-b3bf-4a7d-a6e7-1c972f7f3d37&pf_rd_r=TX39TYJSK4D1YPMRS9E5&pd_rd_r=facfa86f-0b56-4a73-bfc1-ea70901545f7&pd_rd_wg=262VD&pd_rd_i=B07F1TL383&fpw=alm&almBrandId=ctnow&ref_=pd_alm_fs_dsk_sf_rtd_1_1_i")
+#     await request.html.arender()
+#
+#     departments = {}
+#
+#     # departments_menu_selector = "#hmenu-content > ul > li > a"
+#     # departments["all"] = request.html.find(departments_menu_selector).text
+#     departments["all"] = request.html.xpath('//*[@id="productTitle"]', first=True).text
+#
+#     return {"data": departments}

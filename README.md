@@ -1,5 +1,14 @@
 # Product Comparison Tool
 
+## Brief
+
+This project was initiated (with myself as its sole developer) with the intention of allowing users to be able to simplify their purchase decisions and save their time. The objective was for users to be able to enter the URLs of products they have shortlisted for purchase, following which the program should (web) scrape information about the products from the URLs provided, generate comparison criteria, and ultimately, recommend, what are according to the program, the best products in that category, price range, etc.
+
+The front-end uses React (refer to the ```package.json``` file for information about the front-end dependencies).
+The front-end uses ```create-react-app```.
+The back-end uses the the framework FastAPI (refer to the ```requirements.txt``` for information about the back-end dependencies). (WIP)
+The machine learning library currently being used is fastText. (WIP)
+
 ---
 
 This project is licensed under the terms of the MIT License.
